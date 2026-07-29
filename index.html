@@ -1,0 +1,56 @@
+REM ============================================================
+REM  FAKE "iPhone HACK" — PRANK PAYLOAD  (Flipper Zero / Momentum)
+REM  100% SAFE: this is a USB KEYBOARD. It only TYPES TEXT into the
+REM  note you already have open. It cannot open apps, read data,
+REM  change settings, or access anything. It is pure theater.
+REM  Target: YOUR OWN iPhone, in a controlled test.
+REM  Setup: open Notes, new note, tap into it (cursor blinking),
+REM         autocorrect OFF (see the walkthrough), THEN run this.
+REM ============================================================
+
+REM DEFAULT_DELAY adds this pause between every line, for pacing.
+DEFAULT_DELAY 220
+
+DELAY 1500
+STRINGLN > initializing link over usb...
+DELAY 500
+STRINGLN > handshake ........ OK
+STRINGLN > negotiating protocol ........ OK
+DELAY 400
+STRINGLN > target: iPhone (this device)
+STRINGLN > mode: LOCAL / CONTROLLED TEST
+DELAY 600
+STRINGLN
+STRINGLN root@iphone:~# ./run_exploit --target local
+DELAY 900
+STRINGLN [*] scanning services...
+STRINGLN [*] found: com.apple.springboard
+STRINGLN [*] found: com.apple.mobilesafari
+STRINGLN [*] found: com.apple.mobilemail
+DELAY 700
+STRINGLN [+] injecting payload
+STRINGLN     [##--------] 18%
+DELAY 350
+STRINGLN     [#####-----] 51%
+DELAY 350
+STRINGLN     [########--] 84%
+DELAY 350
+STRINGLN     [##########] 100%
+DELAY 600
+STRINGLN [+] escalating privileges .......... done
+STRINGLN [+] bypassing biometric lock ....... done
+DELAY 500
+STRINGLN [*] exfiltrating data:
+STRINGLN     - contacts.vcf ....... 1,204 records
+STRINGLN     - camera_roll/ ....... 8,417 items
+STRINGLN     - saved_passwords .... [REDACTED]
+DELAY 900
+STRINGLN
+STRINGLN >>> ACCESS GRANTED <<<
+DELAY 1200
+STRINGLN
+STRINGLN ...
+DELAY 800
+STRINGLN ...VENMO: BEBADER (50$ MIN). :)
+DELAY 400
+
