@@ -1,56 +1,103 @@
-REM ============================================================
-REM  FAKE "iPhone HACK" — PRANK PAYLOAD  (Flipper Zero / Momentum)
-REM  100% SAFE: this is a USB KEYBOARD. It only TYPES TEXT into the
-REM  note you already have open. It cannot open apps, read data,
-REM  change settings, or access anything. It is pure theater.
-REM  Target: YOUR OWN iPhone, in a controlled test.
-REM  Setup: open Notes, new note, tap into it (cursor blinking),
-REM         autocorrect OFF (see the walkthrough), THEN run this.
-REM ============================================================
-
-REM DEFAULT_DELAY adds this pause between every line, for pacing.
-DEFAULT_DELAY 220
-
-DELAY 1500
-STRINGLN > initializing link over usb...
-DELAY 500
-STRINGLN > handshake ........ OK
-STRINGLN > negotiating protocol ........ OK
-DELAY 400
-STRINGLN > target: iPhone (this device)
-STRINGLN > mode: LOCAL / CONTROLLED TEST
-DELAY 600
-STRINGLN
-STRINGLN root@iphone:~# ./run_exploit --target local
-DELAY 900
-STRINGLN [*] scanning services...
-STRINGLN [*] found: com.apple.springboard
-STRINGLN [*] found: com.apple.mobilesafari
-STRINGLN [*] found: com.apple.mobilemail
-DELAY 700
-STRINGLN [+] injecting payload
-STRINGLN     [##--------] 18%
-DELAY 350
-STRINGLN     [#####-----] 51%
-DELAY 350
-STRINGLN     [########--] 84%
-DELAY 350
-STRINGLN     [##########] 100%
-DELAY 600
-STRINGLN [+] escalating privileges .......... done
-STRINGLN [+] bypassing biometric lock ....... done
-DELAY 500
-STRINGLN [*] exfiltrating data:
-STRINGLN     - contacts.vcf ....... 1,204 records
-STRINGLN     - camera_roll/ ....... 8,417 items
-STRINGLN     - saved_passwords .... [REDACTED]
-DELAY 900
-STRINGLN
-STRINGLN >>> ACCESS GRANTED <<<
-DELAY 1200
-STRINGLN
-STRINGLN ...
-DELAY 800
-STRINGLN ...VENMO: BEBADER (50$ MIN). :)
-DELAY 400
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>⚠ SYSTEM</title>
+<style>
+  :root{--grn:#00ff41;--dim:#007a1f;--red:#ff3030;--ylw:#f5c518;--wht:#e8e8e8}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:100%;height:100%;min-height:100dvh;background:#000;color:var(--grn);font-family:'Courier New',Courier,monospace;font-size:13px;line-height:1.65;overflow:hidden;-webkit-font-smoothing:antialiased}
+  body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.18) 2px,rgba(0,0,0,.18) 4px);pointer-events:none;z-index:100}
+  #terminal{position:fixed;inset:0;padding:18px 16px 24px;overflow:hidden;display:flex;flex-direction:column}
+  .line{white-space:pre;display:block;min-height:1em}
+  .dim{color:var(--dim)}.bright{color:var(--wht)}.red{color:var(--red)}.ylw{color:var(--ylw)}
+  .cursor::after{content:'█';animation:blink .8s step-end infinite}
+  @keyframes blink{50%{opacity:0}}
+  #flash{position:fixed;inset:0;background:var(--grn);opacity:0;pointer-events:none;z-index:50;transition:opacity .06s}
+  #access{position:fixed;inset:0;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;opacity:0;pointer-events:none;transition:opacity .4s;z-index:40;padding:32px}
+  #access.show{opacity:1;pointer-events:all}
+  .ag-warn{color:var(--red);font-size:clamp(10px,3vw,13px);letter-spacing:.3em;text-align:center}
+  .ag-title{color:var(--grn);font-size:clamp(26px,10vw,54px);font-weight:700;letter-spacing:.1em;text-align:center;text-shadow:0 0 30px var(--grn),0 0 60px rgba(0,255,65,.4)}
+  .ag-sub{color:var(--wht);font-size:clamp(10px,3.5vw,15px);letter-spacing:.12em;text-align:center}
+  .ag-bar-wrap{width:min(85%,340px);background:#111;border:1px solid var(--grn);border-radius:3px;height:10px;overflow:hidden;margin-top:4px}
+  #bar-fill{height:100%;width:0%;background:linear-gradient(90deg,#007a1f,var(--grn));box-shadow:0 0 8px var(--grn);transition:width .04s linear}
+  .ag-label{color:var(--dim);font-size:11px;letter-spacing:.08em;text-align:center}
+  #punchline{position:fixed;inset:0;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .5s;z-index:60;padding:40px 32px;font-family:system-ui,-apple-system,sans-serif;text-align:center}
+  #punchline.show{opacity:1;pointer-events:all}
+  .pl-venmo{font-size:clamp(32px,12vw,64px);font-weight:700;color:#3d95ce;letter-spacing:.02em;text-align:center}
+</style>
+</head>
+<body>
+<div id="flash"></div>
+<div id="terminal"></div>
+<div id="access">
+  <div class="ag-warn">⚠ &nbsp; W A R N I N G &nbsp; ⚠</div>
+  <div class="ag-title">ACCESS<br>GRANTED</div>
+  <div class="ag-sub">ALL SYSTEMS COMPROMISED</div>
+  <div class="ag-bar-wrap"><div id="bar-fill"></div></div>
+  <div class="ag-label" id="bar-label">exfiltrating data — 0%</div>
+</div>
+<div id="punchline">
+  <div class="pl-venmo">💸&nbsp; Venmo: @BEBADER &nbsp;💸</div>
+</div>
+<script>
+(function(){
+  const T=document.getElementById('terminal'),FL=document.getElementById('flash'),
+        ACC=document.getElementById('access'),PL=document.getElementById('punchline'),
+        BAR=document.getElementById('bar-fill'),LBL=document.getElementById('bar-label');
+  const SEQ=[
+    {ms:400,text:'',cls:''},{ms:600,text:'> initializing usb link...',cls:'dim'},
+    {ms:1300,text:'> handshake ............. OK',cls:''},
+    {ms:1900,text:'> negotiating protocol .. OK',cls:''},
+    {ms:2500,text:'> auth bypass ........... OK',cls:''},
+    {ms:3000,text:'',cls:''},{ms:3100,text:'> target: iPhone (this device)',cls:'bright'},
+    {ms:3500,text:'> mode:   EXFILTRATE / PERSIST',cls:'red'},
+    {ms:4000,text:'',cls:''},{ms:4200,text:'root@0day:~# ./exploit --stage 2',cls:'bright'},
+    {ms:5100,text:'[*] scanning services...',cls:''},
+    {ms:5500,text:'[*] com.apple.springboard       EXPOSED',cls:''},
+    {ms:5900,text:'[*] com.apple.mobilesafari      EXPOSED',cls:''},
+    {ms:6200,text:'[*] com.apple.icloud.sync       EXPOSED',cls:''},
+    {ms:6500,text:'[*] com.apple.Health            EXPOSED',cls:''},
+    {ms:6800,text:'[*] com.apple.mobilemail        EXPOSED',cls:''},
+    {ms:7000,text:'',cls:''},{ms:7200,text:'[+] injecting payload',cls:'ylw'},
+    {ms:7700,text:'    [##--------]  18%',cls:'dim'},
+    {ms:8250,text:'    [####------]  43%',cls:'dim'},
+    {ms:8700,text:'    [#######---]  71%',cls:'dim'},
+    {ms:9150,text:'    [##########] 100%',cls:'ylw'},
+    {ms:9700,text:'',cls:''},
+    {ms:9850,text:'[+] privilege escalation ........ done',cls:'ylw'},
+    {ms:10350,text:'[+] bypassing FaceID lock ....... done',cls:'ylw'},
+    {ms:10850,text:'[+] acquiring keychain .......... done',cls:'ylw'},
+    {ms:11200,text:'',cls:''},{ms:11400,text:'[*] exfiltrating:',cls:''},
+    {ms:11750,text:'    contacts.vcf ........... 1,204 records',cls:''},
+    {ms:12050,text:'    camera_roll/ ........... 8,417 items   ',cls:''},
+    {ms:12350,text:'    messages/ .............. 32,809 threads',cls:''},
+    {ms:12650,text:'    saved_passwords ........ [REDACTED]    ',cls:'red'},
+    {ms:12950,text:'    location_history ....... 18 months     ',cls:'red'},
+    {ms:13250,text:'    health_data/ ........... 3.2 GB        ',cls:'red'},
+    {ms:13600,text:'',cls:''},
+  ];
+  let lastEl=null;
+  SEQ.forEach(({ms,text,cls})=>{
+    setTimeout(()=>{
+      if(lastEl)lastEl.classList.remove('cursor');
+      const el=document.createElement('span');
+      el.className='line '+(cls||'');el.textContent=text;
+      T.appendChild(el);T.appendChild(document.createTextNode('\n'));
+      lastEl=el;el.classList.add('cursor');T.scrollTop=T.scrollHeight;
+    },ms);
+  });
+  setTimeout(()=>{FL.style.opacity='.65';setTimeout(()=>FL.style.opacity='0',120);setTimeout(()=>{FL.style.opacity='.3';setTimeout(()=>FL.style.opacity='0',80);},220);},14000);
+  setTimeout(()=>{
+    if(lastEl)lastEl.classList.remove('cursor');
+    ACC.classList.add('show');
+    let pct=0;const iv=setInterval(()=>{pct+=1.4;if(pct>=100){pct=100;clearInterval(iv);}BAR.style.width=pct+'%';LBL.textContent='exfiltrating data — '+Math.round(pct)+'%';},40);
+  },14200);
+  setTimeout(()=>{ACC.style.transition='opacity .3s';ACC.style.opacity='0';setTimeout(()=>{ACC.style.display='none';PL.classList.add('show');},320);},18500);
+})();
+</script>
+</body>
+</html>
